@@ -1,13 +1,20 @@
 import React from 'react';
+import useCachedResources from '../hooks/useCachedResources';
+import useColorScheme from '../hooks/useColorScheme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Navigation } from '../screens';
+import { StatusBar } from 'expo-status-bar';
 
+export const AppContainer: React.VFC = () => {
+  const isLoadingComplete = useCachedResources();
+  const colorScheme = useColorScheme();
 
-const AppContainer: React.VFC = () => {
- return (
-  <div>
+  if (!isLoadingComplete) return null;
 
-  </div>
- );
+  return (
+    <SafeAreaProvider>
+      <Navigation colorScheme={colorScheme} />
+      <StatusBar />
+    </SafeAreaProvider>
+  );
 };
-
-const ComponentWrapper = AppContainer;
-export {ComponentWrapper as AppContainer};
