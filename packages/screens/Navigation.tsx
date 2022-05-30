@@ -15,8 +15,8 @@ import { ModalScreen } from './modals';
 import { NotFoundScreen, TabTwoScreen, TabOneScreen } from './screens';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './Navigator.types';
 
-import { Colors } from '../theme';
-import useColorScheme from '../hooks/useColorScheme';
+import { Colors } from '@app/theme';
+import { useColorScheme } from '@app/core';
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
@@ -59,20 +59,18 @@ export function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+const RootNavigator = () => {
   return (
-    // @ts-ignore
     <Stack.Navigator initialRouteName={'Root'}>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 
-      {/*// @ts-ignore*/}
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
-}
+};
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -84,7 +82,6 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    // @ts-ignore
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
@@ -104,7 +101,6 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              {/*// @ts-ignore*/}
               <FontAwesome
                 name="info-circle"
                 size={25}
@@ -130,10 +126,9 @@ function BottomTabNavigator() {
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: {
+const TabBarIcon = (props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
-}) {
-  // @ts-ignore
+}) => {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+};

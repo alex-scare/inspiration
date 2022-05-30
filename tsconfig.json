@@ -1,6 +1,25 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/app": [
+        "./packages/app"
+      ],
+      "@app/core": [
+        "./packages/core"
+      ],
+      "@app/components": [
+        "./packages/components"
+      ],
+      "@app/theme": [
+        "./packages/theme"
+      ],
+      "@app/screens": [
+        "./packages/screens"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "babel.config.js"]
 }
