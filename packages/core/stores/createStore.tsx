@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
+import { create } from 'mobx-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const createStore = <TStore,>(storeValue: TStore) => {
+const hydrate = create({ storage: AsyncStorage, jsonify: true });
+
+export const createStore = <TStore,>(storeValue: TStore, ASName: string) => {
   const store = React.createContext(storeValue);
+
+  hydrate(ASName, storeValue).then(() => console.info(`${ASName} has been hydrated`));
 
   const Provider: React.FC = ({ children }) => {
     return <store.Provider value={storeValue}>{children}</store.Provider>;

@@ -1,1 +1,1 @@
-export * from './ConstantsStore';
+export * from './SettingsStore';

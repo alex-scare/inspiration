@@ -1,18 +1,25 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 
 import { Text, View, EditScreenInfo } from '@app/components';
 import { RootTabScreenProps } from '../Navigator.types';
+import { useSettingsStore } from '@app/core';
+import { observer } from 'mobx-react-lite';
 
-export function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
+  const store2 = useSettingsStore();
+
+  console.log('store', store2.counter);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <Text style={styles.title}>{store2.counter}</Text>
+      <Button title={'Increment number'} onPress={store2.incrementCounter} />
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -30,3 +37,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+const Wrapper = observer(TabOneScreen);
+export { Wrapper as TabOneScreen };
