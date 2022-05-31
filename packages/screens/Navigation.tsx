@@ -17,6 +17,8 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './Navi
 
 import { Colors } from '@app/theme';
 import { useColorScheme } from '@app/core';
+import { Icon, IconButton } from '@app/components';
+import tw from 'tailwind-react-native-classnames';
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
@@ -53,11 +55,8 @@ export function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 const RootNavigator = () => {
   return (
@@ -71,12 +70,6 @@ const RootNavigator = () => {
     </Stack.Navigator>
   );
 };
-
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -93,21 +86,9 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
           headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
+            <IconButton onPress={() => navigation.navigate('Modal')} iconName={'info-circle'} />
           ),
         })}
       />
@@ -116,19 +97,9 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
         }}
       />
     </BottomTab.Navigator>
   );
 }
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-const TabBarIcon = (props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) => {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-};
