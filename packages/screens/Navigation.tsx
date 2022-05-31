@@ -16,7 +16,7 @@ import { NotFoundScreen, TabTwoScreen, TabOneScreen } from './screens';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';
-import { useColorScheme, useSettingsStore, useRootStore } from '@app/core';
+import { useColorScheme } from '@app/core';
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
