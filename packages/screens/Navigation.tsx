@@ -10,9 +10,9 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import * as Linking from 'expo-linking';
 
-import { ModalScreen } from './modals';
+import { EditGoalModal } from './modals';
 import { NotFoundScreen, TabOneScreen, TabTwoScreen } from './screens';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './Navigator.types';
+import { RootStackParamList, RootTabParamList, TabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';
 import { useColorScheme } from '@app/core';
@@ -33,7 +33,7 @@ export const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) =>
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="Goal" component={ModalScreen} />
+          <Stack.Screen name="Goal" component={EditGoalModal} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -61,7 +61,7 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="Goals"
         component={TabTwoScreen}
-        options={({ navigation }: RootTabScreenProps<'Goals'>) => ({
+        options={({ navigation }: TabScreenProps<'Goals'>) => ({
           title: 'Your goals',
           tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
           headerRight: () => (

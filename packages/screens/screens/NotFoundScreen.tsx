@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, View } from '@app/components';
-import { RootStackScreenProps } from '../Navigator.types';
+import { StackScreenProps } from '../Navigator.types';
 
-export function NotFoundScreen({ navigation }: RootStackScreenProps<'NotFound'>) {
+export function NotFoundScreen({ navigation }: StackScreenProps<'NotFound'>) {
   return (
     <View position="center">
       <Text variant="title">{`This screen doesn't exist.`}</Text>

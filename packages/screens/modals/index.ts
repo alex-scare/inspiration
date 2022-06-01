@@ -1,1 +1,1 @@
-export * from './ModalScreen';
+export * from './EditGoalModal';

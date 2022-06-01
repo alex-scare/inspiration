@@ -12,7 +12,7 @@ export type RootTabParamList = {
   Goals: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
+export type TabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
@@ -20,10 +20,10 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  Goal: { mode: "create" } | { mode: "update"; id: string };
+  Goal: { mode: 'create' } | { mode: 'update'; id: string };
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
+export type StackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
   Screen
 >;

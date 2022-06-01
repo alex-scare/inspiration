@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from 'react-native';
 
 import { Divider, Text, View } from '@app/components';
-import { RootTabScreenProps } from '../Navigator.types';
+import { TabScreenProps } from '../Navigator.types';
 import { useSettingsStore } from '@app/core';
 import { observer } from 'mobx-react-lite';
 
-const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
+const TabOneScreen = ({ navigation }: TabScreenProps<'TabOne'>) => {
   const store2 = useSettingsStore();
 
   return (

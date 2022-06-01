@@ -2,19 +2,13 @@ import { createStore } from './createStore';
 import { makeAutoObservable } from 'mobx';
 import { persist } from 'mobx-persist';
 import uuid from 'react-native-uuid';
+import { Goal } from '../models';
 
-interface Goal {
-  id: string;
-  title: string;
-  power: 0;
-  // todo add icon and color
-  // icon: string;
-  // color: string;
-}
-
-type Goals = Record<Goal['id'], Goal>;
+type GoalId = Goal['id'];
+type Goals = Record<GoalId, Goal>;
 
 export class GoalsStore {
+  // todo fix persist
   @persist('list') goals: Goals = {};
 
   constructor(goals: Goals | null) {
@@ -23,25 +17,24 @@ export class GoalsStore {
     if (goals) this.goals = goals;
   }
 
-  get goalsList () {
+  get goalsList() {
     return Object.values(this.goals);
   }
 
-  getGoal = (id: Goal['id']) => this.goals[id];
+  getGoal = (id: GoalId) => this.goals[id];
 
   createGoal = (params: Omit<Goal, 'id' | 'power'>) => {
     const id = uuid.v4() as string;
-    this.goals[id] = { id, power: 0, ...params};
-  }
+    this.goals[id] = { id, power: 0, ...params };
+  };
 
-  updateGoal = (id: Goal['id'], params: Omit<Goal, 'id'>) => {
-    this.goals[id] = { ...this.goals[id], ...params};
-  }
+  updateGoal = (id: GoalId, params: Partial<Omit<Goal, 'id'>>) => {
+    this.goals[id] = { ...this.goals[id], ...params };
+  };
 
-  removeGoal = (id: Goal['id']) => {
+  removeGoal = (id: GoalId) => {
     delete this.goals[id];
-  }
-
+  };
 }
 
 export const { useStore: useGoalsStore, Provider: GoalsProvider } = createStore(
