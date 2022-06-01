@@ -28,12 +28,12 @@ export const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) =>
       linking={linking}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <Stack.Navigator initialRouteName={'Root'}>
+      <Stack.Navigator initialRouteName="Root">
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="Modal" component={ModalScreen} />
+          <Stack.Screen name="Goal" component={ModalScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -45,29 +45,32 @@ const BottomTabNavigator = () => {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Main"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
+        name="Main"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        options={() => ({
+          title: 'Main',
           tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
-          headerRight: () => (
-            <IconButton onPress={() => navigation.navigate('Modal')} iconName={'info-circle'} />
-          ),
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Goals"
         component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
+        options={({ navigation }: RootTabScreenProps<'Goals'>) => ({
+          title: 'Your goals',
           tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
-        }}
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.navigate('Goal', { mode: 'create' })}
+              iconName="plus"
+            />
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );
@@ -79,19 +82,19 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Main: {
             screens: {
-              TabOneScreen: 'one',
+              MainScreen: 'main',
             },
           },
-          TabTwo: {
+          Goals: {
             screens: {
-              TabTwoScreen: 'two',
+              GoalsScreen: 'goals',
             },
           },
         },
       },
-      Modal: 'modal',
+      Goal: 'goal',
       NotFound: '*',
     },
   },
