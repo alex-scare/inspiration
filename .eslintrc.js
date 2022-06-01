@@ -22,5 +22,6 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'ignore' }],
   },
 };

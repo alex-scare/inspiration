@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { Button } from 'react-native';
 
 import { Divider, Text, View } from '@app/components';
 import { RootTabScreenProps } from '../Navigator.types';
@@ -10,9 +10,9 @@ const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
   const store2 = useSettingsStore();
 
   return (
-    <View position={'center'}>
-      <Text variant={'title'}>{store2.counter}</Text>
-      <Button title={'Increment number'} onPress={store2.incrementCounter} />
+    <View position="center">
+      <Text variant="title">{store2.counter}</Text>
+      <Button title="Increment number" onPress={store2.incrementCounter} />
       <Divider />
     </View>
   );

@@ -1,18 +1,17 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-  NavigationContainer,
-  DefaultTheme,
   DarkTheme,
+  DefaultTheme,
   LinkingOptions,
+  NavigationContainer,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName } from 'react-native';
 import * as Linking from 'expo-linking';
 
 import { ModalScreen } from './modals';
-import { NotFoundScreen, TabTwoScreen, TabOneScreen } from './screens';
+import { NotFoundScreen, TabOneScreen, TabTwoScreen } from './screens';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';
@@ -20,58 +19,28 @@ import { useColorScheme } from '@app/core';
 import { Icon, IconButton } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 
-const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl('/')],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: 'one',
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
-        },
-      },
-      Modal: 'modal',
-      NotFound: '*',
-    },
-  },
-};
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-export function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   return (
     <NavigationContainer
       linking={linking}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <Stack.Navigator initialRouteName={'Root'}>
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="Modal" component={ModalScreen} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-const RootNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName={'Root'}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
   );
 };
 
-function BottomTabNavigator() {
+const BottomTabNavigator = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -102,4 +71,28 @@ function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
+};
+
+const linking: LinkingOptions<RootStackParamList> = {
+  prefixes: [Linking.makeUrl('/')],
+  config: {
+    screens: {
+      Root: {
+        screens: {
+          TabOne: {
+            screens: {
+              TabOneScreen: 'one',
+            },
+          },
+          TabTwo: {
+            screens: {
+              TabTwoScreen: 'two',
+            },
+          },
+        },
+      },
+      Modal: 'modal',
+      NotFound: '*',
+    },
+  },
+};
