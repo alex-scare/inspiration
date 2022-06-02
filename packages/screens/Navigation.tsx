@@ -11,7 +11,7 @@ import { ColorSchemeName } from 'react-native';
 import * as Linking from 'expo-linking';
 
 import { EditGoalModal } from './modals';
-import { NotFoundScreen, TabOneScreen, TabTwoScreen } from './screens';
+import { NotFoundScreen, TabOneScreen, GoalsScreen } from './screens';
 import { RootStackParamList, RootTabParamList, TabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';
@@ -60,7 +60,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Goals"
-        component={TabTwoScreen}
+        component={GoalsScreen}
         options={({ navigation }: TabScreenProps<'Goals'>) => ({
           title: 'Your goals',
           tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,

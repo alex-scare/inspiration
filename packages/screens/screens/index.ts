@@ -1,3 +1,3 @@
-export * from './TabTwoScreen';
+export * from './GoalsScreen';
 export * from './TabOneScreen';
 export * from './NotFoundScreen';
