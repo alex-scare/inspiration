@@ -8,8 +8,7 @@ type GoalId = Goal['id'];
 type Goals = Record<GoalId, Goal>;
 
 export class GoalsStore {
-  // todo fix persist
-  @persist('list') goals: Goals = {};
+  @persist('object') goals: Goals = {};
 
   constructor(goals: Goals | null) {
     makeAutoObservable(this);
