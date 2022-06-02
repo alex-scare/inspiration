@@ -4,3 +4,4 @@ export * from './Text';
 export * from './IconButton';
 export * from './Icon';
 export * from './TextInput';
+export * from './SwipeWrapper';

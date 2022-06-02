@@ -27,3 +27,4 @@ export type StackScreenProps<Screen extends keyof RootStackParamList> = NativeSt
   RootStackParamList,
   Screen
 >;
+export type ScreenProps = NativeStackScreenProps<RootStackParamList>;
