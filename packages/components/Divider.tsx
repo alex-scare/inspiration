@@ -1,11 +1,11 @@
 import React from 'react';
-import { View } from './View';
+import { View, ViewProps } from './View';
 import tw from 'tailwind-react-native-classnames';
 import { useColorScheme } from '@app/core';
 
-const Divider: React.VFC = () => {
+const Divider: React.VFC<ViewProps> = ({ style, ...props }) => {
   const color = useColorScheme();
-  return <View style={[styles.container[color]]} />;
+  return <View style={[styles.container[color], style]} {...props} />;
 };
 
 const styles = {

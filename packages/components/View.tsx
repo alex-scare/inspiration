@@ -2,7 +2,7 @@ import React from 'react';
 import tw from 'tailwind-react-native-classnames';
 import { View as RnView, ViewProps as RnViewProps } from 'react-native';
 
-interface ViewProps extends RnViewProps {
+export interface ViewProps extends RnViewProps {
   position?: 'center' | 'default';
 }
 
