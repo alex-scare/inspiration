@@ -1,4 +1,4 @@
-import { format, addDays } from 'date-fns';
+import { format, addDays, isToday, isTomorrow, isYesterday } from 'date-fns';
 
 export const dateHelper = {
   dateFormat: 'yyyy-MM-dd',
@@ -18,5 +18,13 @@ export const dateHelper = {
 
   getPrevDateName(dateName: string) {
     return this.addDaysToDateName(dateName, -1);
+  },
+
+  getDateNameLabel(dateName: string) {
+    const date = new Date(dateName);
+    if (isToday(date)) return 'today';
+    if (isYesterday(date)) return 'yesterday';
+    if (isTomorrow(date)) return 'tomorrow';
+    return dateName;
   },
 };

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Pressable } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
 import { Icon, IconProps } from './Icon';
 
 interface IconButtonProps extends IconProps {
   onPress: () => void;
 }
 
-const IconButton: React.VFC<IconButtonProps> = ({ onPress, name, source }) => {
+const IconButton: React.VFC<IconButtonProps> = ({ onPress, name, source, ...props }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -15,13 +14,9 @@ const IconButton: React.VFC<IconButtonProps> = ({ onPress, name, source }) => {
         opacity: pressed ? 0.5 : 1,
       })}
     >
-      <Icon source={source} name={name} style={styles.icon} />
+      <Icon source={source} name={name} {...props} />
     </Pressable>
   );
-};
-
-const styles = {
-  icon: tw.style('mr-4'),
 };
 
 const ComponentWrapper = React.memo(IconButton);

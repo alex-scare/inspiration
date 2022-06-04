@@ -62,8 +62,9 @@ const BottomTabNavigator = () => {
           headerRight: () => (
             <IconButton
               onPress={() => navigation.navigate('EditDayGoals', { mode: 'day' })}
-              name="plus"
-              source="FA"
+              name="add"
+              source="Ion"
+              style={tw.style('mr-4')}
             />
           ),
         })}
@@ -79,8 +80,9 @@ const BottomTabNavigator = () => {
           headerRight: () => (
             <IconButton
               onPress={() => navigation.navigate('Goal', { mode: 'create' })}
-              name="plus"
-              source="FA"
+              name="add"
+              source="Ion"
+              style={tw.style('mr-4')}
             />
           ),
         })}
