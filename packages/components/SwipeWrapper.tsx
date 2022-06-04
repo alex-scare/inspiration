@@ -34,8 +34,7 @@ const getSwipeAction = ({ action, Icon, style }: SwipeActionProps) => (
 );
 
 const styles = {
-  container: tw.style('box-border'),
-  action: tw.style('justify-center items-center p-2'),
+  action: tw.style('justify-center items-center p-2 w-14'),
 };
 
 const ComponentWrapper = React.memo(SwipeWrapper);

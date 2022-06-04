@@ -55,7 +55,9 @@ const BottomTabNavigator = () => {
         component={TabOneScreen}
         options={() => ({
           title: 'Main',
-          tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Icon source="Ion" style={tw.style('-mb-1')} name="today-outline" color={color} />
+          ),
         })}
       />
       <BottomTab.Screen
@@ -63,11 +65,14 @@ const BottomTabNavigator = () => {
         component={GoalsScreen}
         options={({ navigation }: TabScreenProps<'Goals'>) => ({
           title: 'Your goals',
-          tabBarIcon: ({ color }) => <Icon style={tw.style('-mb-1')} name="code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Icon source="Ion" style={tw.style('-mb-1')} name="list-outline" color={color} />
+          ),
           headerRight: () => (
             <IconButton
               onPress={() => navigation.navigate('Goal', { mode: 'create' })}
-              iconName="plus"
+              name="plus"
+              source="FA"
             />
           ),
         })}

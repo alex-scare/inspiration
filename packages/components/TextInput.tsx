@@ -37,7 +37,7 @@ const TextInput = <Form extends object>({
 };
 
 const styles = {
-  main: tw.style('rounded-xl'),
+  main: tw.style('rounded-xl p-4 pt-2.5 pb-3 bg-gray-800 text-base text-white '),
 };
 
 const Wrapper = React.memo(TextInput) as typeof TextInput;

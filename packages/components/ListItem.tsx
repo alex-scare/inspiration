@@ -24,7 +24,7 @@ const ListItem: React.VFC<ListItemProps> = ({ title, style, left, right, ...prop
 };
 
 const styles = {
-  container: tw.style('flex flex-nowrap flex-row justify-between px-4 py-3'),
+  container: tw.style('flex flex-nowrap flex-row justify-between items-center px-4 py-3'),
   main: tw.style('flex flex-nowrap flex-row'),
   title: tw.style('mx-3'),
 };

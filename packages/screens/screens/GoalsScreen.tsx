@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Icon, View, ListItem, SwipeWrapper, Divider } from '@app/components';
+import { Icon, View, ListItem, SwipeWrapper, Divider, IconSources, Text } from '@app/components';
 import { useGoalsStore } from '@app/core';
 import tw from 'tailwind-react-native-classnames';
 import { ScrollView } from 'react-native';
@@ -14,25 +14,38 @@ const GoalsScreen = ({ navigation }: TabScreenProps<'Goals'>) => {
     <View style={styles.view}>
       <ScrollView style={styles.container}>
         <View style={styles.list}>
-          {goalsList.map((it, i) => (
-            <React.Fragment key={it.id}>
-              {i > 0 && <Divider style={styles.divider} />}
-              <SwipeWrapper
-                leftSwipe={{
-                  action: () => navigation.navigate('Goal', { mode: 'update', id: it.id }),
-                  Icon: <Icon name="edit" />,
-                  style: tw.style('bg-yellow-700'),
-                }}
-                rightSwipe={{
-                  action: () => removeGoal(it.id),
-                  Icon: <Icon name="trash" />,
-                  style: tw.style('bg-red-800'),
-                }}
-              >
-                <ListItem title={it.title} />
-              </SwipeWrapper>
-            </React.Fragment>
-          ))}
+          {goalsList.map((it, i) => {
+            const [source, name] = it.icon.split('.');
+            return (
+              <React.Fragment key={it.id}>
+                {i > 0 && <Divider style={styles.divider} />}
+                <SwipeWrapper
+                  leftSwipe={{
+                    action: () => navigation.navigate('Goal', { mode: 'update', id: it.id }),
+                    Icon: <Icon source="FA" name="edit" />,
+                    style: tw.style('bg-yellow-700'),
+                  }}
+                  rightSwipe={{
+                    action: () => removeGoal(it.id),
+                    Icon: <Icon source="FA" name="trash" />,
+                    style: tw.style('bg-red-800'),
+                  }}
+                >
+                  <ListItem
+                    left={
+                      <Icon
+                        source={source as IconSources}
+                        name={name}
+                        viewStyle={styles.iconView}
+                      />
+                    }
+                    title={it.title}
+                    right={<Text>{it.power}</Text>}
+                  />
+                </SwipeWrapper>
+              </React.Fragment>
+            );
+          })}
         </View>
       </ScrollView>
     </View>
@@ -44,6 +57,7 @@ const styles = {
   divider: tw.style('h-1 bg-transparent m-0'),
   container: tw.style('flex'),
   list: tw.style('rounded-md m-3 overflow-hidden'),
+  iconView: tw.style('w-8'),
 };
 
 const Wrapper = observer(GoalsScreen);

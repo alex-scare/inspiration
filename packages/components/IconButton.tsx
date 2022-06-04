@@ -1,15 +1,13 @@
 import React from 'react';
-import { FontAwesome } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import { Icon } from './Icon';
+import { Icon, IconProps } from './Icon';
 
-interface IconButtonProps {
+interface IconButtonProps extends IconProps {
   onPress: () => void;
-  iconName: React.ComponentProps<typeof FontAwesome>['name'];
 }
 
-const IconButton: React.VFC<IconButtonProps> = ({ onPress, iconName }) => {
+const IconButton: React.VFC<IconButtonProps> = ({ onPress, name, source }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -17,7 +15,7 @@ const IconButton: React.VFC<IconButtonProps> = ({ onPress, iconName }) => {
         opacity: pressed ? 0.5 : 1,
       })}
     >
-      <Icon name={iconName} style={styles.icon} />
+      <Icon source={source} name={name} style={styles.icon} />
     </Pressable>
   );
 };
