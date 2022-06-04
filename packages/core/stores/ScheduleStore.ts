@@ -13,11 +13,11 @@ type Schedule = Record<string, ScheduleDay>;
 
 export class ScheduleStore {
   @persist currentDayName: string;
-  @persist('object') readonly schedule: Schedule = {};
+  @persist('object') schedule: Schedule = {};
   @persist('object') private readonly dayDraft: ScheduleDay = { goals: {}, countForSuccess: 3 };
 
   constructor(schedule: Schedule | null) {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {});
     if (schedule) this.schedule = schedule;
 
     this.currentDayName = dateHelper.getDateName(new Date());
@@ -38,25 +38,25 @@ export class ScheduleStore {
 
   getDay = (day: string) => {
     const currentDay = this.schedule[day];
-    if (!currentDay) this.schedule[day] = this.defaultDay;
+    if (!currentDay) this.schedule[day] = { ...this.defaultDay };
     return this.schedule[day];
   };
 
-  addGoal = (day: string) => (goalId: Goal['id']) => {
-    this.schedule[day].goals[goalId] = false;
+  addGoal = (goalId: Goal['id']) => {
+    this.currentDay.goals[goalId] = false;
   };
 
-  removeGoal = (day: string) => (goalId: Goal['id']) => {
-    delete this.schedule[day].goals[goalId];
+  removeGoal = (goalId: Goal['id']) => {
+    delete this.currentDay.goals[goalId];
   };
 
-  toggleGoal = (day: string) => (goalId: Goal['id']) => {
-    const dailyGoals = this.schedule[day].goals;
+  toggleGoal = (goalId: Goal['id']) => {
+    const dailyGoals = this.currentDay.goals;
     dailyGoals[goalId] = !dailyGoals[goalId];
   };
 
-  setSuccessCount = (day: string) => (count: number) => {
-    this.schedule[day].countForSuccess = count;
+  setSuccessCount = (count: number) => {
+    this.currentDay.countForSuccess = count;
   };
 
   addDailyGoal = (goalId: Goal['id']) => {
@@ -81,6 +81,10 @@ export class ScheduleStore {
       return;
     }
     this.currentDayName = dateHelper.getDateName(date);
+  };
+
+  resetAllStoreData = () => {
+    this.schedule = {};
   };
 }
 

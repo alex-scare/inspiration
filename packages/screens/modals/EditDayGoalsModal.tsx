@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { useGoalsStore, useScheduleStore } from '@app/core';
 
 const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = () => {
-  const { currentDayName, addGoal, removeGoal, currentDay } = useScheduleStore();
+  const { addGoal, removeGoal, currentDay } = useScheduleStore();
   const { goalsList } = useGoalsStore();
 
   return (
@@ -18,11 +18,7 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = () => {
             <IconButton
               source="Ion"
               name={it.id in currentDay.goals ? 'remove' : 'add'}
-              onPress={() =>
-                it.id in currentDay.goals
-                  ? removeGoal(currentDayName)(it.id)
-                  : addGoal(currentDayName)(it.id)
-              }
+              onPress={() => (it.id in currentDay.goals ? removeGoal(it.id) : addGoal(it.id))}
             />
           }
         />

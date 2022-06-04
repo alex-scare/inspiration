@@ -5,11 +5,23 @@ import { useGoalsStore, useScheduleStore } from '@app/core';
 import { Icon, IconButton, IconSources, ListItem, View, Text } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { dateHelper } from '../../../core/helpers/dateHelper';
+import { Pressable } from 'react-native';
 
 const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) => {
-  const { currentDayGoalIds, toggleGoal, currentDayName, currentDay, changeCurrentDayName } =
-    useScheduleStore();
-  const { getGoal, incrementPower, decrementPower } = useGoalsStore();
+  const {
+    defaultDay,
+    currentDayGoalIds,
+    toggleGoal,
+    currentDayName,
+    currentDay,
+    changeCurrentDayName,
+    resetAllStoreData,
+    schedule,
+  } = useScheduleStore();
+  const { getGoal, incrementPower, decrementPower, resetGoalsPower } = useGoalsStore();
+
+  console.log('default day', defaultDay);
+  console.log('schedule', schedule);
 
   useEffect(() => {
     navigation.setOptions({
@@ -44,9 +56,9 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
             right={
               <IconButton
                 source="Ion"
-                name={currentDay.goals[goalId] ? 'close' : 'checkmark'}
+                name={currentDay.goals[goalId] ? 'checkbox-outline' : 'square-outline'}
                 onPress={() => {
-                  toggleGoal(currentDayName)(goalId);
+                  toggleGoal(goalId);
                   currentDay.goals[goalId] ? decrementPower(goalId) : incrementPower(goalId);
                 }}
               />
@@ -55,6 +67,16 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
           />
         );
       })}
+
+      <Text>god mode</Text>
+      <Pressable
+        onPress={() => {
+          resetAllStoreData();
+          resetGoalsPower();
+        }}
+      >
+        <Text>reset all</Text>
+      </Pressable>
     </View>
   );
 };

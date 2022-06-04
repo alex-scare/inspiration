@@ -42,6 +42,12 @@ export class GoalsStore {
   decrementPower = (id: GoalId) => {
     this.goals[id].power = this.goals[id].power - 1;
   };
+
+  resetGoalsPower = () => {
+    for (const key in this.goals) {
+      this.goals[key].power = 0;
+    }
+  };
 }
 
 export const { useStore: useGoalsStore, Provider: GoalsProvider } = createStore(
