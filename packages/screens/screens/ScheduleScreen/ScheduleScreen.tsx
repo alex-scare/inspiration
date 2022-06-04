@@ -5,23 +5,20 @@ import { useGoalsStore, useScheduleStore } from '@app/core';
 import { Icon, IconButton, IconSources, ListItem, View, Text } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { dateHelper } from '../../../core/helpers/dateHelper';
-import { Pressable } from 'react-native';
+import { Pressable, TouchableOpacity } from 'react-native';
+
+const godMode = false;
 
 const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) => {
   const {
-    defaultDay,
     currentDayGoalIds,
     toggleGoal,
     currentDayName,
     currentDay,
     changeCurrentDayName,
     resetAllStoreData,
-    schedule,
   } = useScheduleStore();
   const { getGoal, incrementPower, decrementPower, resetGoalsPower } = useGoalsStore();
-
-  console.log('default day', defaultDay);
-  console.log('schedule', schedule);
 
   useEffect(() => {
     navigation.setOptions({
@@ -32,7 +29,9 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
             name="chevron-back"
             onPress={() => changeCurrentDayName('prev')}
           />
-          <Text style={tw.style('mx-2')}>{dateHelper.getDateNameLabel(currentDayName)}</Text>
+          <TouchableOpacity onLongPress={() => changeCurrentDayName(new Date())}>
+            <Text style={tw.style('mx-2')}>{dateHelper.getDateNameLabel(currentDayName)}</Text>
+          </TouchableOpacity>
           <IconButton
             source="Ion"
             name="chevron-forward"
@@ -59,7 +58,7 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
                 name={currentDay.goals[goalId] ? 'checkbox-outline' : 'square-outline'}
                 onPress={() => {
                   toggleGoal(goalId);
-                  currentDay.goals[goalId] ? decrementPower(goalId) : incrementPower(goalId);
+                  currentDay.goals[goalId] ? incrementPower(goalId) : decrementPower(goalId);
                 }}
               />
             }
@@ -68,15 +67,19 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
         );
       })}
 
-      <Text>god mode</Text>
-      <Pressable
-        onPress={() => {
-          resetAllStoreData();
-          resetGoalsPower();
-        }}
-      >
-        <Text>reset all</Text>
-      </Pressable>
+      {godMode && (
+        <View style={tw.style('my-5')}>
+          <Text variant="title">god mode</Text>
+          <Pressable
+            onPress={() => {
+              resetAllStoreData();
+              resetGoalsPower();
+            }}
+          >
+            <Text>reset all</Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };

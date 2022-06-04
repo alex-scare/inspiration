@@ -4,29 +4,28 @@ import tw from 'tailwind-react-native-classnames';
 import { Goal, useGoalsStore } from '@app/core';
 import { TabScreenProps } from '../../Navigator.types';
 
-interface GoalItemProps extends TabScreenProps<'Goals'> {
-  goal: Goal;
+interface GoalItemProps extends TabScreenProps<'Goals'>, Goal {
   divider: boolean;
 }
 
-const GoalItem: React.VFC<GoalItemProps> = ({ goal, divider, navigation }) => {
+const GoalItem: React.VFC<GoalItemProps> = ({ id, title, icon, power, divider, navigation }) => {
   const { removeGoal } = useGoalsStore();
-  const [source, name] = goal.icon.split('.');
+  const [source, name] = icon.split('.');
 
   const swipes = useMemo(
     () => ({
       leftSwipe: {
-        action: () => navigation.navigate('Goal', { mode: 'update', id: goal.id }),
+        action: () => navigation.navigate('Goal', { mode: 'update', id }),
         Icon: <Icon source="FA" name="edit" />,
         style: tw.style('bg-yellow-700'),
       },
       rightSwipe: {
-        action: () => removeGoal(goal.id),
+        action: () => removeGoal(id),
         Icon: <Icon source="FA" name="trash" />,
         style: tw.style('bg-red-800'),
       },
     }),
-    [removeGoal, navigation, goal],
+    [removeGoal, navigation, id],
   );
 
   return (
@@ -35,8 +34,8 @@ const GoalItem: React.VFC<GoalItemProps> = ({ goal, divider, navigation }) => {
       <SwipeWrapper {...swipes}>
         <ListItem
           left={<Icon source={source as IconSources} name={name} viewStyle={styles.iconView} />}
-          title={goal.title}
-          right={<Text>{goal.power}</Text>}
+          title={title}
+          right={<Text>{power}</Text>}
         />
       </SwipeWrapper>
     </>

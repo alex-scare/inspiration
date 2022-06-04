@@ -36,11 +36,11 @@ export class GoalsStore {
   };
 
   incrementPower = (id: GoalId) => {
-    this.goals[id].power = this.goals[id].power + 1;
+    this.goals[id].power += 1;
   };
 
   decrementPower = (id: GoalId) => {
-    this.goals[id].power = this.goals[id].power - 1;
+    this.goals[id].power -= 1;
   };
 
   resetGoalsPower = () => {
