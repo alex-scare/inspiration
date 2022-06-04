@@ -4,7 +4,13 @@ import { StatusBar } from 'expo-status-bar';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 
-import { useCachedResources, useColorScheme, SettingsProvider, GoalsProvider } from '@app/core';
+import {
+  useCachedResources,
+  useColorScheme,
+  SettingsProvider,
+  GoalsProvider,
+  ScheduleProvider,
+} from '@app/core';
 import { default as theme } from './theme.json';
 import { Navigation } from '@app/screens';
 
@@ -18,8 +24,10 @@ export const AppContainer: React.VFC = () => {
       <SafeAreaProvider>
         <SettingsProvider>
           <GoalsProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
+            <ScheduleProvider>
+              <Navigation colorScheme={colorScheme} />
+              <StatusBar />
+            </ScheduleProvider>
           </GoalsProvider>
         </SettingsProvider>
       </SafeAreaProvider>

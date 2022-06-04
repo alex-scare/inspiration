@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { create } from 'mobx-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type StoreName = 'settings' | 'goals';
+type StoreName = 'settings' | 'goals' | 'schedule';
 
 const hydrate = create({ storage: AsyncStorage, jsonify: true });
 
