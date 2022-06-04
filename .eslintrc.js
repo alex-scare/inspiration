@@ -4,11 +4,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  plugins: ['react', '@typescript-eslint', 'prettier', 'import'],
+  plugins: ['react', '@typescript-eslint', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

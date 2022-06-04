@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'react-native';
 
 import { TextInput, View } from '@app/components';
-import { StackScreenProps } from '../Navigator.types';
+import { StackScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
 import { Goal, useGoalsStore } from '@app/core';
 import { useForm, FormProvider } from 'react-hook-form';

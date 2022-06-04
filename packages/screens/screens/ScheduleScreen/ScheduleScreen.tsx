@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TabScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
 import { useGoalsStore, useScheduleStore } from '@app/core';

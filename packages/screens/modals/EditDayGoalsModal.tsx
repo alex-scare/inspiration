@@ -1,27 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StackScreenProps } from '../Navigator.types';
-import { IconButton, ListItem, View } from '@app/components';
+import { Icon, ListItem, View } from '@app/components';
 import { observer } from 'mobx-react-lite';
-import { useGoalsStore, useScheduleStore } from '@app/core';
+import { useGoalsStore } from '@app/core';
+import { Pressable } from 'react-native';
 
-const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = () => {
-  const { addGoal, removeGoal, currentDay } = useScheduleStore();
+const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
+  navigation,
+  route: {
+    params: { add, remove, goals, mode },
+  },
+}) => {
   const { goalsList } = useGoalsStore();
+
+  useEffect(() => {
+    const variants = { day: 'day goals', daily: 'default daily goals' };
+
+    navigation.setOptions({ title: variants[mode] });
+  }, [mode]);
 
   return (
     <View>
       {goalsList.map((it) => (
-        <ListItem
-          key={it.id}
-          title={it.title}
-          right={
-            <IconButton
-              source="Ion"
-              name={it.id in currentDay.goals ? 'remove' : 'add'}
-              onPress={() => (it.id in currentDay.goals ? removeGoal(it.id) : addGoal(it.id))}
-            />
-          }
-        />
+        <Pressable key={it.id} onPress={() => (it.id in goals ? remove(it.id) : add(it.id))}>
+          <ListItem
+            title={it.title}
+            right={<Icon source="Ion" name={it.id in goals ? 'remove' : 'add'} />}
+          />
+        </Pressable>
       ))}
     </View>
   );

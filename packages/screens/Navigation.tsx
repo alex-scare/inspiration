@@ -43,7 +43,6 @@ export const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) =>
 
 const BottomTabNavigator = () => {
   const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       initialRouteName="Schedule"
@@ -54,18 +53,10 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="Schedule"
         component={ScheduleScreen}
-        options={({ navigation }) => ({
+        options={() => ({
           title: 'Main',
           tabBarIcon: ({ color }) => (
             <Icon source="Ion" style={tw.style('-mb-1')} name="today-outline" color={color} />
-          ),
-          headerRight: () => (
-            <IconButton
-              onPress={() => navigation.navigate('EditDayGoals', { mode: 'day' })}
-              name="add"
-              source="Ion"
-              style={tw.style('mr-4')}
-            />
           ),
         })}
       />
