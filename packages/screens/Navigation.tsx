@@ -10,8 +10,8 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import * as Linking from 'expo-linking';
 
-import { EditGoalModal } from './modals';
-import { NotFoundScreen, TabOneScreen, GoalsScreen } from './screens';
+import { EditDayGoalsModal, EditGoalModal } from './modals';
+import { NotFoundScreen, GoalsScreen, ScheduleScreen } from './screens';
 import { RootStackParamList, RootTabParamList, TabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';
@@ -34,6 +34,7 @@ export const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) =>
 
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="Goal" component={EditGoalModal} />
+          <Stack.Screen name="EditDayGoals" component={EditDayGoalsModal} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -45,18 +46,25 @@ const BottomTabNavigator = () => {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Main"
+      initialRouteName="Schedule"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="Main"
-        component={TabOneScreen}
-        options={() => ({
+        name="Schedule"
+        component={ScheduleScreen}
+        options={({ navigation }) => ({
           title: 'Main',
           tabBarIcon: ({ color }) => (
             <Icon source="Ion" style={tw.style('-mb-1')} name="today-outline" color={color} />
+          ),
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.navigate('EditDayGoals', { mode: 'day' })}
+              name="plus"
+              source="FA"
+            />
           ),
         })}
       />
@@ -87,9 +95,9 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          Main: {
+          Schedule: {
             screens: {
-              MainScreen: 'main',
+              ScheduleScreen: 'schedule',
             },
           },
           Goals: {
@@ -100,6 +108,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         },
       },
       Goal: 'goal',
+      EditDayGoals: 'editDayGoals',
       NotFound: '*',
     },
   },

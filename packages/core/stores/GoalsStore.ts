@@ -34,6 +34,14 @@ export class GoalsStore {
   removeGoal = (id: GoalId) => {
     delete this.goals[id];
   };
+
+  incrementPower = (id: GoalId) => {
+    this.goals[id].power = this.goals[id].power + 1;
+  };
+
+  decrementPower = (id: GoalId) => {
+    this.goals[id].power = this.goals[id].power - 1;
+  };
 }
 
 export const { useStore: useGoalsStore, Provider: GoalsProvider } = createStore(

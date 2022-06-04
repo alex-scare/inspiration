@@ -12,6 +12,7 @@ interface ScheduleDay {
 type Schedule = Record<string, ScheduleDay>;
 
 export class ScheduleStore {
+  @persist currentDayName: string;
   @persist('object') readonly schedule: Schedule = {};
   @persist('object') private readonly dayDraft: ScheduleDay = { goals: {}, countForSuccess: 3 };
 
@@ -19,12 +20,20 @@ export class ScheduleStore {
     makeAutoObservable(this);
     if (schedule) this.schedule = schedule;
 
-    const todayName = dateHelper.getDateName(new Date());
-    if (!(todayName in this.schedule)) this.getDay(todayName);
+    this.currentDayName = dateHelper.getDateName(new Date());
+    if (!(this.currentDayName in this.schedule)) this.getDay(this.currentDayName);
   }
 
-  get defaultDay() {
-    return { ...this.dayDraft };
+  get defaultDay(): ScheduleDay {
+    return { ...this.dayDraft, goals: { ...this.dayDraft.goals } };
+  }
+
+  get currentDay() {
+    return this.getDay(this.currentDayName);
+  }
+
+  get currentDayGoalIds() {
+    return Object.keys(this.currentDay.goals);
   }
 
   getDay = (day: string) => {
@@ -60,6 +69,18 @@ export class ScheduleStore {
 
   setDailySuccessCount = (count: number) => {
     this.dayDraft.countForSuccess = count;
+  };
+
+  changeCurrentDayName = (date: 'next' | 'prev' | Date) => {
+    if (date === 'prev') {
+      this.currentDayName = dateHelper.getPrevDateName(this.currentDayName);
+      return;
+    }
+    if (date === 'next') {
+      this.currentDayName = dateHelper.getNextDateName(this.currentDayName);
+      return;
+    }
+    this.currentDayName = dateHelper.getDateName(date);
   };
 }
 
