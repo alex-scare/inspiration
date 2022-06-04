@@ -4,43 +4,16 @@ import { observer } from 'mobx-react-lite';
 import { useGoalsStore, useScheduleStore } from '@app/core';
 import { Icon, IconButton, IconSources, ListItem, View, Text } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
-import { dateHelper } from '../../../core/helpers/dateHelper';
-import { Pressable, TouchableOpacity } from 'react-native';
+import { Pressable } from 'react-native';
+import { useScheduleScreenHeader } from './ScheduleScreen.hooks';
 
 const godMode = false;
 
 const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) => {
-  const {
-    currentDayGoalIds,
-    toggleGoal,
-    currentDayName,
-    currentDay,
-    changeCurrentDayName,
-    resetAllStoreData,
-  } = useScheduleStore();
+  const { currentDayGoalIds, toggleGoal, currentDay, resetAllStoreData } = useScheduleStore();
   const { getGoal, incrementPower, decrementPower, resetGoalsPower } = useGoalsStore();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => (
-        <View style={tw.style('flex flex-nowrap flex-row items-center')}>
-          <IconButton
-            source="Ion"
-            name="chevron-back"
-            onPress={() => changeCurrentDayName('prev')}
-          />
-          <TouchableOpacity onLongPress={() => changeCurrentDayName(new Date())}>
-            <Text style={tw.style('mx-2')}>{dateHelper.getDateNameLabel(currentDayName)}</Text>
-          </TouchableOpacity>
-          <IconButton
-            source="Ion"
-            name="chevron-forward"
-            onPress={() => changeCurrentDayName('next')}
-          />
-        </View>
-      ),
-    });
-  }, [currentDayName]);
+  useScheduleScreenHeader({ navigation });
 
   return (
     <View>

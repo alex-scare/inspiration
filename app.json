@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-expo-boilerplate",
-    "slug": "rn-expo-boilerplate",
+    "name": "inspiration",
+    "slug": "inspiration",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
