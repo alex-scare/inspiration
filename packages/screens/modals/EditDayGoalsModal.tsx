@@ -1,21 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StackScreenProps } from '../Navigator.types';
 import { Icon, ListItem, View } from '@app/components';
 import { observer } from 'mobx-react-lite';
-import { useGoalsStore } from '@app/core';
+import { useGoalsStore, useScheduleStore } from '@app/core';
 import { Pressable } from 'react-native';
 
 const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
   navigation,
   route: {
-    params: { add, remove, goals, mode },
+    params: { mode },
   },
 }) => {
+  const { currentDay, addGoal, removeGoal, addDailyGoal, removeDailyGoal, defaultDay } =
+    useScheduleStore();
   const { goalsList } = useGoalsStore();
+
+  const { add, remove, goals } = useMemo(() => {
+    const variants = {
+      day: { add: addGoal, remove: removeGoal, goals: currentDay.goals },
+      daily: { add: addDailyGoal, remove: removeDailyGoal, goals: defaultDay.goals },
+    };
+    return variants[mode];
+  }, [mode, defaultDay, currentDay]);
 
   useEffect(() => {
     const variants = { day: 'day goals', daily: 'default daily goals' };
-
     navigation.setOptions({ title: variants[mode] });
   }, [mode]);
 

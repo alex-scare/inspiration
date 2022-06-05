@@ -21,12 +21,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
   Goal: { mode: 'create' } | { mode: 'update'; id: string };
-  EditDayGoals: {
-    add: (id: string) => void;
-    remove: (id: string) => void;
-    goals: Record<string, boolean>;
-    mode: 'day' | 'daily';
-  };
+  EditDayGoals: { mode: 'day' | 'daily' };
 };
 
 export type StackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
