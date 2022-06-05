@@ -1,4 +1,4 @@
-import { ScheduleStore } from '@app/core';
+import { dateHelper, ScheduleStore } from '@app/core';
 
 jest.mock('../createStore', () => ({
   createStore: jest.fn().mockReturnValue({ useStore: undefined, Provider: undefined }),
@@ -9,6 +9,11 @@ describe('test schedule store', () => {
   const emptyDayName = '2022-02-02';
 
   const scheduleStore = new ScheduleStore({ [emptyDayName]: { ...emptyDay } });
+
+  it('store should have today', () => {
+    const today = dateHelper.getDateName(new Date());
+    expect(today in scheduleStore.schedule).toBeTruthy();
+  });
 
   it('getDay should return existing day', () => {
     const day = scheduleStore.getDay(emptyDayName);
@@ -25,6 +30,8 @@ describe('test schedule store', () => {
     expect(day).toBeTruthy();
     expect(dayName in scheduleStore.schedule).toBeTruthy();
 
-    expect(Object.keys(scheduleStore.schedule).length).toBe(2);
+    console.log('days', Object.keys(scheduleStore.schedule));
+
+    expect(Object.keys(scheduleStore.schedule).length).toBe(3);
   });
 });

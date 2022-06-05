@@ -1,10 +1,14 @@
 import { IconFullName } from '@app/components';
 
-export interface Goal {
-  id: string;
+export interface GoalEditableFields {
   title: string;
-  power: number;
   icon: IconFullName;
-  // todo add icon and color
+}
+
+export interface Goal extends GoalEditableFields {
+  id: string;
+  isArchived: boolean;
+
+  // todo add color
   // color: string;
 }

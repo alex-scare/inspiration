@@ -2,10 +2,10 @@ import { createStore } from './createStore';
 import { makeAutoObservable } from 'mobx';
 import { persist } from 'mobx-persist';
 import { Goal } from '@app/core';
-import { dateHelper } from '../helpers/dateHelper';
+import { dateHelper } from '../helpers';
 
 interface ScheduleDay {
-  goals: Record<Goal['id'], boolean>;
+  goals: Record<Goal['id'], null>;
   countForSuccess: number;
 }
 
@@ -43,16 +43,11 @@ export class ScheduleStore {
   };
 
   addGoal = (goalId: Goal['id']) => {
-    this.currentDay.goals[goalId] = false;
+    this.currentDay.goals[goalId] = null;
   };
 
   removeGoal = (goalId: Goal['id']) => {
     delete this.currentDay.goals[goalId];
-  };
-
-  toggleGoal = (goalId: Goal['id']) => {
-    const dailyGoals = this.currentDay.goals;
-    dailyGoals[goalId] = !dailyGoals[goalId];
   };
 
   setSuccessCount = (count: number) => {
@@ -60,7 +55,7 @@ export class ScheduleStore {
   };
 
   addDailyGoal = (goalId: Goal['id']) => {
-    this.dayDraft.goals[goalId] = false;
+    this.dayDraft.goals[goalId] = null;
   };
 
   removeDailyGoal = (goalId: Goal['id']) => {
@@ -72,18 +67,21 @@ export class ScheduleStore {
   };
 
   changeCurrentDayName = (date: 'next' | 'prev' | Date) => {
-    if (date === 'prev') {
-      this.currentDayName = dateHelper.getPrevDateName(this.currentDayName);
-      return;
+    switch (date) {
+      case 'prev':
+        this.currentDayName = dateHelper.getPrevDateName(this.currentDayName);
+        break;
+      case 'next':
+        this.currentDayName = dateHelper.getNextDateName(this.currentDayName);
+        break;
+      default:
+        this.currentDayName = dateHelper.getDateName(date);
     }
-    if (date === 'next') {
-      this.currentDayName = dateHelper.getNextDateName(this.currentDayName);
-      return;
-    }
-    this.currentDayName = dateHelper.getDateName(date);
   };
 
-  resetAllStoreData = () => {
+  // god mode methods
+
+  __resetAllStoreData = () => {
     this.schedule = {};
   };
 }
