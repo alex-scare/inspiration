@@ -25,11 +25,11 @@ export class GoalActivitiesStore {
     return Object.keys(this.activities[goalId]).length;
   };
 
-  addGoalActivity = (goalId: Goal['id'], day: string) => {
+  addGoalActivityOnDay = (goalId: Goal['id'], day: string) => {
     this.getGoalActivity(goalId)[day] = null;
   };
 
-  removeGoalActivity = (goalId: Goal['id'], day: string) => {
+  removeGoalActivityOnDay = (goalId: Goal['id'], day: string) => {
     delete this.getGoalActivity(goalId)[day];
   };
 

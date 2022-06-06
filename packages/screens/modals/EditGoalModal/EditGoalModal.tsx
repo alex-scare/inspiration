@@ -4,7 +4,7 @@ import { Button } from 'react-native';
 import { TextInput, View } from '@app/components';
 import { StackScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
-import { GoalEditableFields, useGoalsStore } from '@app/core';
+import { GoalEditableFields, useGoalsRootStore } from '@app/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import tw from 'tailwind-react-native-classnames';
 import { IconList } from './IconList';
@@ -25,7 +25,7 @@ const EditGoalModal = ({ navigation, route: { params } }: StackScreenProps<'Goal
   const {
     goals: { getGoal, updateGoal },
     createGoal,
-  } = useGoalsStore();
+  } = useGoalsRootStore();
 
   const form = useForm<FormFields>({
     defaultValues: params.mode === 'update' ? getGoal(params.id) : { title: '' },

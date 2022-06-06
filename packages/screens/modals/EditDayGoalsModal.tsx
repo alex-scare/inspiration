@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { StackScreenProps } from '../Navigator.types';
 import { Icon, ListItem, View } from '@app/components';
 import { observer } from 'mobx-react-lite';
-import { useGoalsStore, useScheduleStore } from '@app/core';
+import { useGoalsRootStore } from '@app/core';
 import { Pressable } from 'react-native';
 
 const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
@@ -11,15 +11,16 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
     params: { mode },
   },
 }) => {
-  const { currentDay, addGoal, removeGoal, addDailyGoal, removeDailyGoal, defaultDay } =
-    useScheduleStore();
   const {
     goals: { goalsList },
-  } = useGoalsStore();
+    schedule: { currentDay, addDailyGoal, removeDailyGoal, defaultDay },
+    addGoalOnDay,
+    removeGoalOnDay,
+  } = useGoalsRootStore();
 
   const { add, remove, goals } = useMemo(() => {
     const variants = {
-      day: { add: addGoal, remove: removeGoal, goals: currentDay.goals },
+      day: { add: addGoalOnDay, remove: removeGoalOnDay, goals: currentDay.goals },
       daily: { add: addDailyGoal, remove: removeDailyGoal, goals: defaultDay.goals },
     };
     return variants[mode];

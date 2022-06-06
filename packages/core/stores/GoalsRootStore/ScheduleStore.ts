@@ -1,8 +1,7 @@
-import { createStore } from './createStore';
 import { makeAutoObservable } from 'mobx';
 import { persist } from 'mobx-persist';
 import { Goal } from '@app/core';
-import { dateHelper } from '../helpers';
+import { dateHelper } from '../../helpers';
 
 interface ScheduleDay {
   goals: Record<Goal['id'], null>;
@@ -42,12 +41,12 @@ export class ScheduleStore {
     return this.schedule[day];
   };
 
-  addGoal = (goalId: Goal['id']) => {
-    this.currentDay.goals[goalId] = null;
+  __addDayGoal = (goalId: Goal['id'], dayName: string) => {
+    this.getDay(dayName).goals[goalId] = null;
   };
 
-  removeGoal = (goalId: Goal['id']) => {
-    delete this.currentDay.goals[goalId];
+  __removeDayGoal = (goalId: Goal['id'], dayName: string) => {
+    delete this.getDay(dayName).goals[goalId];
   };
 
   setSuccessCount = (count: number) => {
@@ -86,8 +85,3 @@ export class ScheduleStore {
     this.dayDraft.goals = {};
   };
 }
-
-export const { useStore: useScheduleStore, Provider: ScheduleProvider } = createStore(
-  new ScheduleStore(null),
-  'schedule',
-);

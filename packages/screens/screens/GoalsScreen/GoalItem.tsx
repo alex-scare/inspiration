@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Divider, Icon, IconSources, ListItem, SwipeWrapper, Text } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
-import { Goal, useGoalsStore } from '@app/core';
+import { Goal, useGoalsRootStore } from '@app/core';
 import { TabScreenProps } from '../../Navigator.types';
 
 interface GoalItemProps extends TabScreenProps<'Goals'>, Goal {
@@ -10,7 +10,7 @@ interface GoalItemProps extends TabScreenProps<'Goals'>, Goal {
 }
 
 const GoalItem: React.VFC<GoalItemProps> = ({ id, title, icon, power, divider, navigation }) => {
-  const { removeGoal } = useGoalsStore();
+  const { removeGoal } = useGoalsRootStore();
   const [source, name] = icon.split('.');
 
   const swipes = useMemo(

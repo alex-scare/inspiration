@@ -1,3 +1,2 @@
 export * from './SettingsStore';
-export * from './GoalsStore';
-export * from './ScheduleStore';
+export * from './GoalsRootStore';

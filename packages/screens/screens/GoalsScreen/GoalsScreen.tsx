@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View } from '@app/components';
-import { useGoalsStore } from '@app/core';
+import { useGoalsRootStore } from '@app/core';
 import tw from 'tailwind-react-native-classnames';
 import { ScrollView } from 'react-native';
 import { TabScreenProps } from '../../Navigator.types';
@@ -12,7 +12,7 @@ const GoalsScreen = (props: TabScreenProps<'Goals'>) => {
   const {
     goals: { goalsList },
     activities: { getGoalActivityPower },
-  } = useGoalsStore();
+  } = useGoalsRootStore();
 
   return (
     <View style={styles.view}>

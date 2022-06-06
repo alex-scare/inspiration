@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
-import { useGoalsStore, useScheduleStore } from '@app/core';
+import { useGoalsRootStore } from '@app/core';
 import { Icon, IconButton, IconSources, ListItem, View, Text } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { Pressable } from 'react-native';
@@ -10,12 +10,12 @@ import { useScheduleScreenHeader } from './ScheduleScreen.hooks';
 const godMode = false;
 
 const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) => {
-  const { currentDayGoalIds, currentDayName, __resetAllStoreData } = useScheduleStore();
   const {
     goals: { getGoal },
-    activities: { activities, addGoalActivity, removeGoalActivity },
+    activities: { activities, addGoalActivityOnDay, removeGoalActivityOnDay },
+    schedule: { currentDayGoalIds, currentDayName, __resetAllStoreData },
     __resetAllGoals,
-  } = useGoalsStore();
+  } = useGoalsRootStore();
 
   useScheduleScreenHeader({ navigation });
 
@@ -36,8 +36,8 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
                 name={isActivityCompleted ? 'checkbox-outline' : 'square-outline'}
                 onPress={() => {
                   isActivityCompleted
-                    ? removeGoalActivity(goalId, currentDayName)
-                    : addGoalActivity(goalId, currentDayName);
+                    ? removeGoalActivityOnDay(goalId, currentDayName)
+                    : addGoalActivityOnDay(goalId, currentDayName);
                 }}
               />
             }

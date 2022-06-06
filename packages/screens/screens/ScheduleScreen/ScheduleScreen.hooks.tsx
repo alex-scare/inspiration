@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Icon, IconButton, Text, View } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { TouchableOpacity } from 'react-native';
-import { dateHelper, useScheduleStore } from '@app/core';
+import { dateHelper, useGoalsRootStore } from '@app/core';
 import { TabScreenProps } from '../../Navigator.types';
 import { HoldItem } from 'react-native-hold-menu';
 
@@ -11,7 +11,9 @@ interface UseScheduleScreenHeaderParams {
 }
 
 export const useScheduleScreenHeader = ({ navigation }: UseScheduleScreenHeaderParams) => {
-  const { changeCurrentDayName, currentDayName, currentDay, defaultDay } = useScheduleStore();
+  const {
+    schedule: { changeCurrentDayName, currentDayName, currentDay, defaultDay },
+  } = useGoalsRootStore();
 
   const openModal = useCallback(
     (mode: 'day' | 'daily') => navigation.navigate('EditDayGoals', { mode }),

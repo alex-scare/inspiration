@@ -4,13 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 
-import {
-  GoalsProvider,
-  ScheduleProvider,
-  SettingsProvider,
-  useCachedResources,
-  useColorScheme,
-} from '@app/core';
+import { GoalsProvider, SettingsProvider, useCachedResources, useColorScheme } from '@app/core';
 import { default as theme } from './theme.json';
 import { Navigation } from '@app/screens';
 import { HoldMenuProvider } from 'react-native-hold-menu';
@@ -26,10 +20,8 @@ export const AppContainer: React.VFC = () => {
         <HoldMenuProvider theme={colorScheme}>
           <SettingsProvider>
             <GoalsProvider>
-              <ScheduleProvider>
-                <Navigation colorScheme={colorScheme} />
-                <StatusBar />
-              </ScheduleProvider>
+              <Navigation colorScheme={colorScheme} />
+              <StatusBar />
             </GoalsProvider>
           </SettingsProvider>
         </HoldMenuProvider>
