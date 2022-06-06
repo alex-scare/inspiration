@@ -2,7 +2,7 @@ import React from 'react';
 import { TabScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
 import { useGoalsRootStore } from '@app/core';
-import { Icon, IconSources, ListItem, ListWrapper, Text, View } from '@app/components';
+import { Icon, IconSources, ListWrapper, SelectableListItem, Text, View } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { Pressable } from 'react-native';
 import { useScheduleScreenHeader } from './ScheduleScreen.hooks';
@@ -26,26 +26,17 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
         const isActivityCompleted = currentDayName in activities[goalId];
         const [iconSource, iconName] = goal.icon.split('.');
         return (
-          <Pressable
+          <SelectableListItem
             key={goalId}
-            onPress={() => {
+            onSelect={() => {
               isActivityCompleted
                 ? removeGoalActivityOnDay(goalId, currentDayName)
                 : addGoalActivityOnDay(goalId, currentDayName);
             }}
-          >
-            <ListItem
-              title={goal.title}
-              left={<Icon source={iconSource as IconSources} name={iconName} />}
-              right={
-                <Icon
-                  source="Ion"
-                  name={isActivityCompleted ? 'checkbox-outline' : 'square-outline'}
-                />
-              }
-              style={isActivityCompleted ? styles.goalCompleted : styles.goalUncompleted}
-            />
-          </Pressable>
+            selected={isActivityCompleted}
+            title={goal.title}
+            left={<Icon source={iconSource as IconSources} name={iconName} />}
+          />
         );
       })}
 
@@ -64,11 +55,6 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
       )}
     </ListWrapper>
   );
-};
-
-const styles = {
-  goalCompleted: tw.style('bg-green-700'),
-  goalUncompleted: tw.style('bg-gray-700'),
 };
 
 const ComponentWrapper = observer(ScheduleScreen);

@@ -11,7 +11,7 @@ import { ColorSchemeName } from 'react-native';
 import * as Linking from 'expo-linking';
 
 import { EditDayGoalsModal, EditGoalModal } from './modals';
-import { NotFoundScreen, GoalsScreen, ScheduleScreen } from './screens';
+import { GoalsScreen, NotFoundScreen, ScheduleScreen } from './screens';
 import { RootStackParamList, RootTabParamList, TabScreenProps } from './Navigator.types';
 
 import { Colors } from '@app/theme';

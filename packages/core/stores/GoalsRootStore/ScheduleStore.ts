@@ -37,7 +37,9 @@ export class ScheduleStore {
 
   getDay = (day: string) => {
     const currentDay = this.schedule[day];
-    if (!currentDay) this.schedule[day] = { ...this.defaultDay };
+    if (!currentDay) {
+      this.schedule[day] = { ...this.defaultDay };
+    }
     return this.schedule[day];
   };
 

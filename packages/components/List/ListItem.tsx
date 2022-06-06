@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, ViewProps } from './View';
+import { View, ViewProps } from '../View';
 import tw from 'tailwind-react-native-classnames';
-import { Text } from './Text';
+import { Text } from '../Text';
 import { useColorScheme } from '@app/core';
 
-interface ListItemProps extends Omit<ViewProps, 'children'> {
+export interface ListItemProps extends Omit<ViewProps, 'children'> {
   title: string;
   left?: React.ReactNode;
   right?: React.ReactNode;

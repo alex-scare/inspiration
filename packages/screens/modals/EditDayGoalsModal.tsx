@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import { StackScreenProps } from '../Navigator.types';
-import { Icon, ListItem, ListWrapper, View } from '@app/components';
+import { Icon, ListWrapper, SelectableListItem } from '@app/components';
 import { observer } from 'mobx-react-lite';
 import { useGoalsRootStore } from '@app/core';
-import { Pressable } from 'react-native';
 
 const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
   navigation,
@@ -33,14 +32,18 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
 
   return (
     <ListWrapper>
-      {goalsList.map((it) => (
-        <Pressable key={it.id} onPress={() => (it.id in goals ? remove(it.id) : add(it.id))}>
-          <ListItem
+      {goalsList.map((it) => {
+        const selected = it.id in goals;
+        return (
+          <SelectableListItem
+            key={it.id}
+            selected={selected}
+            onSelect={() => (selected ? remove(it.id) : add(it.id))}
             title={it.title}
-            right={<Icon source="Ion" name={it.id in goals ? 'remove' : 'add'} />}
+            right={<Icon source="Ion" name={selected ? 'remove' : 'add'} />}
           />
-        </Pressable>
-      ))}
+        );
+      })}
     </ListWrapper>
   );
 };

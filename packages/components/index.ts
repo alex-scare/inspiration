@@ -5,5 +5,4 @@ export * from './IconButton';
 export * from './Icon';
 export * from './TextInput';
 export * from './SwipeWrapper';
-export * from './ListItem';
-export * from './ListWrapper';
+export * from './List';

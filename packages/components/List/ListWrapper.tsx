@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'tailwind-react-native-classnames';
-import { View, ViewProps } from './View';
+import { View, ViewProps } from '../View';
 import { ScrollView } from 'react-native';
 
 const ListWrapper = ({ children }: ViewProps) => {
