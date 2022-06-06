@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View } from '@app/components';
-import { useGoalsStore, useScheduleStore } from '@app/core';
+import { useGoalsStore } from '@app/core';
 import tw from 'tailwind-react-native-classnames';
 import { ScrollView } from 'react-native';
 import { TabScreenProps } from '../../Navigator.types';
@@ -9,14 +9,23 @@ import { observer } from 'mobx-react-lite';
 import { GoalItem } from './GoalItem';
 
 const GoalsScreen = (props: TabScreenProps<'Goals'>) => {
-  const { goals } = useGoalsStore();
+  const {
+    goals: { goalsList },
+    activities: { getGoalActivityPower },
+  } = useGoalsStore();
 
   return (
     <View style={styles.view}>
       <ScrollView style={styles.container}>
         <View style={styles.list}>
-          {Object.values(goals).map((it, i) => (
-            <GoalItem key={i} divider={i > 0} {...it} {...props} />
+          {goalsList.map((it, i) => (
+            <GoalItem
+              key={i}
+              divider={i > 0}
+              power={getGoalActivityPower(it.id)}
+              {...it}
+              {...props}
+            />
           ))}
         </View>
       </ScrollView>

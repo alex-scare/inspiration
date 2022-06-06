@@ -10,8 +10,12 @@ import { useScheduleScreenHeader } from './ScheduleScreen.hooks';
 const godMode = false;
 
 const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) => {
-  const { currentDayGoalIds, toggleGoal, currentDay, resetAllStoreData } = useScheduleStore();
-  const { getGoal, incrementPower, decrementPower, resetGoalsPower } = useGoalsStore();
+  const { currentDayGoalIds, currentDayName, __resetAllStoreData } = useScheduleStore();
+  const {
+    goals: { getGoal },
+    activities: { activities, addGoalActivity, removeGoalActivity },
+    __resetAllGoals,
+  } = useGoalsStore();
 
   useScheduleScreenHeader({ navigation });
 
@@ -19,6 +23,7 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
     <View>
       {currentDayGoalIds.map((goalId) => {
         const goal = getGoal(goalId);
+        const isActivityCompleted = currentDayName in activities[goalId];
         const [iconSource, iconName] = goal.icon.split('.');
         return (
           <ListItem
@@ -28,14 +33,15 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
             right={
               <IconButton
                 source="Ion"
-                name={currentDay.goals[goalId] ? 'checkbox-outline' : 'square-outline'}
+                name={isActivityCompleted ? 'checkbox-outline' : 'square-outline'}
                 onPress={() => {
-                  toggleGoal(goalId);
-                  currentDay.goals[goalId] ? incrementPower(goalId) : decrementPower(goalId);
+                  isActivityCompleted
+                    ? removeGoalActivity(goalId, currentDayName)
+                    : addGoalActivity(goalId, currentDayName);
                 }}
               />
             }
-            style={currentDay.goals[goalId] ? styles.goalCompleted : styles.goalUncompleted}
+            style={isActivityCompleted ? styles.goalCompleted : styles.goalUncompleted}
           />
         );
       })}
@@ -45,8 +51,8 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
           <Text variant="title">god mode</Text>
           <Pressable
             onPress={() => {
-              resetAllStoreData();
-              resetGoalsPower();
+              __resetAllStoreData();
+              __resetAllGoals();
             }}
           >
             <Text>reset all</Text>

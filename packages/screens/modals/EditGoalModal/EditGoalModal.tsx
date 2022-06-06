@@ -4,14 +4,14 @@ import { Button } from 'react-native';
 import { TextInput, View } from '@app/components';
 import { StackScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
-import { Goal, useGoalsStore } from '@app/core';
+import { GoalEditableFields, useGoalsStore } from '@app/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import tw from 'tailwind-react-native-classnames';
 import { IconList } from './IconList';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-type FormFields = Omit<Goal, 'id' | 'power'>;
+type FormFields = GoalEditableFields;
 
 const getResolver = () =>
   yupResolver<yup.SchemaOf<FormFields>>(
@@ -22,7 +22,10 @@ const getResolver = () =>
   );
 
 const EditGoalModal = ({ navigation, route: { params } }: StackScreenProps<'Goal'>) => {
-  const { getGoal, createGoal, updateGoal } = useGoalsStore();
+  const {
+    goals: { getGoal, updateGoal },
+    createGoal,
+  } = useGoalsStore();
 
   const form = useForm<FormFields>({
     defaultValues: params.mode === 'update' ? getGoal(params.id) : { title: '' },

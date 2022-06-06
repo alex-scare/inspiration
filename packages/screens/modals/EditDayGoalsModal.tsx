@@ -13,7 +13,9 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
 }) => {
   const { currentDay, addGoal, removeGoal, addDailyGoal, removeDailyGoal, defaultDay } =
     useScheduleStore();
-  const { goalsList } = useGoalsStore();
+  const {
+    goals: { goalsList },
+  } = useGoalsStore();
 
   const { add, remove, goals } = useMemo(() => {
     const variants = {

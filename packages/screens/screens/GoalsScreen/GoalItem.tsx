@@ -6,6 +6,7 @@ import { TabScreenProps } from '../../Navigator.types';
 
 interface GoalItemProps extends TabScreenProps<'Goals'>, Goal {
   divider: boolean;
+  power: number;
 }
 
 const GoalItem: React.VFC<GoalItemProps> = ({ id, title, icon, power, divider, navigation }) => {

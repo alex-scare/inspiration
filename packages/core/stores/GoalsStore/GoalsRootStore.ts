@@ -13,19 +13,24 @@ export class GoalsRootStore {
     makeAutoObservable(this);
   }
 
-  createGoal(params: GoalEditableFields) {
+  createGoal = (params: GoalEditableFields) => {
     const goalId = this.goals.__createGoal(params);
     this.activities.createEmptyActivity(goalId);
-  }
+  };
 
-  archiveGoal(id: Goal['id']) {
+  archiveGoal = (id: Goal['id']) => {
     this.goals.__archiveGoal(id);
-  }
+  };
 
-  removeGoal(id: Goal['id']) {
+  removeGoal = (id: Goal['id']) => {
     this.goals.__removeGoal(id);
-    this.activities.removeAllGoalActivity(id);
-  }
+    this.activities.removeAllGoalActivities(id);
+  };
+
+  __resetAllGoals = () => {
+    this.goals.goals = {};
+    this.activities.activities = {};
+  };
 }
 
 export const { useStore: useGoalsStore, Provider: GoalsProvider } = createStore(

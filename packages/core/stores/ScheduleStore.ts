@@ -83,6 +83,7 @@ export class ScheduleStore {
 
   __resetAllStoreData = () => {
     this.schedule = {};
+    this.dayDraft.goals = {};
   };
 }
 
