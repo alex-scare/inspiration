@@ -2,7 +2,7 @@ import React from 'react';
 import { TabScreenProps } from '../../Navigator.types';
 import { observer } from 'mobx-react-lite';
 import { useGoalsRootStore } from '@app/core';
-import { Icon, IconButton, IconSources, ListItem, View, Text } from '@app/components';
+import { Icon, IconSources, ListItem, ListWrapper, Text, View } from '@app/components';
 import tw from 'tailwind-react-native-classnames';
 import { Pressable } from 'react-native';
 import { useScheduleScreenHeader } from './ScheduleScreen.hooks';
@@ -20,29 +20,32 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
   useScheduleScreenHeader({ navigation });
 
   return (
-    <View>
+    <ListWrapper>
       {currentDayGoalIds.map((goalId) => {
         const goal = getGoal(goalId);
         const isActivityCompleted = currentDayName in activities[goalId];
         const [iconSource, iconName] = goal.icon.split('.');
         return (
-          <ListItem
+          <Pressable
             key={goalId}
-            title={goal.title}
-            left={<Icon source={iconSource as IconSources} name={iconName} />}
-            right={
-              <IconButton
-                source="Ion"
-                name={isActivityCompleted ? 'checkbox-outline' : 'square-outline'}
-                onPress={() => {
-                  isActivityCompleted
-                    ? removeGoalActivityOnDay(goalId, currentDayName)
-                    : addGoalActivityOnDay(goalId, currentDayName);
-                }}
-              />
-            }
-            style={isActivityCompleted ? styles.goalCompleted : styles.goalUncompleted}
-          />
+            onPress={() => {
+              isActivityCompleted
+                ? removeGoalActivityOnDay(goalId, currentDayName)
+                : addGoalActivityOnDay(goalId, currentDayName);
+            }}
+          >
+            <ListItem
+              title={goal.title}
+              left={<Icon source={iconSource as IconSources} name={iconName} />}
+              right={
+                <Icon
+                  source="Ion"
+                  name={isActivityCompleted ? 'checkbox-outline' : 'square-outline'}
+                />
+              }
+              style={isActivityCompleted ? styles.goalCompleted : styles.goalUncompleted}
+            />
+          </Pressable>
         );
       })}
 
@@ -59,7 +62,7 @@ const ScheduleScreen: React.VFC<TabScreenProps<'Schedule'>> = ({ navigation }) =
           </Pressable>
         </View>
       )}
-    </View>
+    </ListWrapper>
   );
 };
 

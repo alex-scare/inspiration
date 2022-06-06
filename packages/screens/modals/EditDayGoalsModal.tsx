@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { StackScreenProps } from '../Navigator.types';
-import { Icon, ListItem, View } from '@app/components';
+import { Icon, ListItem, ListWrapper, View } from '@app/components';
 import { observer } from 'mobx-react-lite';
 import { useGoalsRootStore } from '@app/core';
 import { Pressable } from 'react-native';
@@ -32,7 +32,7 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
   }, [mode]);
 
   return (
-    <View>
+    <ListWrapper>
       {goalsList.map((it) => (
         <Pressable key={it.id} onPress={() => (it.id in goals ? remove(it.id) : add(it.id))}>
           <ListItem
@@ -41,7 +41,7 @@ const EditDayGoalsModal: React.VFC<StackScreenProps<'EditDayGoals'>> = ({
           />
         </Pressable>
       ))}
-    </View>
+    </ListWrapper>
   );
 };
 
